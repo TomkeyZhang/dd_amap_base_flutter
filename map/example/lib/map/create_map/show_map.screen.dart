@@ -53,7 +53,7 @@ class _ShowMapScreenState extends State<ShowMapScreen> {
                       head: '显示自己的位置 [Android, iOS]',
                       selected: false,
                       onSelected: (value) {
-                        _updateMyLocationStyle(context, showMyLocation: value);
+                        _updateMyLocationStyle(context, showMyLocation: value,myLocationIcon: "ic_launcher.png");
                       },
                     ),
                     ContinuousSetting(

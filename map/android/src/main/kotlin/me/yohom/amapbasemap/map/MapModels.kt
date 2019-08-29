@@ -176,8 +176,11 @@ class UnifiedMyLocationStyle(
         private val showMyLocation: Boolean
 ) {
     fun applyTo(map: AMap) {
+        val icon=BitmapDescriptorFactory.fromAsset(myLocationIcon)
+
+//        log("icon:$icon")
         map.myLocationStyle = MyLocationStyle()
-//                .myLocationIcon(BitmapDescriptorFactory.fromAsset(myLocationIcon))
+                .myLocationIcon(icon)
                 .anchor(anchorU, anchorV)
                 .radiusFillColor(radiusFillColor.hexStringToColorInt()
                         ?: Color.argb(100, 0, 0, 180))
@@ -186,6 +189,7 @@ class UnifiedMyLocationStyle(
                 .myLocationType(myLocationType)
                 .interval(interval)
                 .showMyLocation(showMyLocation)
+        map.isMyLocationEnabled=showMyLocation
     }
 
 }
