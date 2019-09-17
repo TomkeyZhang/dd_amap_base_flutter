@@ -17,11 +17,11 @@ static NSString *markerClickedChannelName = @"me.yohom/marker_clicked";
 static NSString *mapClickedChannelName = @"me.yohom/map_clicked";
 
 @interface MarkerEventHandler : NSObject <FlutterStreamHandler>
-@property(nonatomic) FlutterEventSink sink;
+@property(nonatomic, copy) FlutterEventSink sink;
 @end
 
 @interface MapEventHandler : NSObject <FlutterStreamHandler>
-@property(nonatomic) FlutterEventSink sink;
+@property(nonatomic, copy) FlutterEventSink sink;
 @end
 
 @implementation MarkerEventHandler {
@@ -163,12 +163,16 @@ static NSString *mapClickedChannelName = @"me.yohom/map_clicked";
 - (void)mapView:(MAMapView *)mapView didSelectAnnotationView:(MAAnnotationView *)view {
   if ([view.annotation isKindOfClass:[MarkerAnnotation class]]) {
     MarkerAnnotation *annotation = (MarkerAnnotation *) view.annotation;
-    _markerClickedEventHandler.sink([annotation.markerOptions mj_JSONString]);
+      if (_markerClickedEventHandler.sink != nil) {
+          _markerClickedEventHandler.sink([annotation.markerOptions mj_JSONString]);
+      }
   }
 }
 
 - (void)mapView:(MAMapView *)mapView didSingleTappedAtCoordinate:(CLLocationCoordinate2D)coordinate {
-  _mapClickedEventHandler.sink([[LatLng initWithCLLocationCoordinate2D:coordinate] mj_JSONString]);
+    if (_mapClickedEventHandler.sink != nil) {
+        _mapClickedEventHandler.sink([[LatLng initWithCLLocationCoordinate2D:coordinate] mj_JSONString]);
+    }
 }
 
 /// 渲染overlay回调
